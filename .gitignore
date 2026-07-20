@@ -3,6 +3,7 @@
 # spec local (não versionada)
 CLAUDE.md
 AGENTS.md
+.claude/
 
 # dependencies
 /node_modules
