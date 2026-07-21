@@ -128,3 +128,38 @@
     @apply font-sans;
   }
 }
+
+/* ============================================================
+   Preferências de aparência (Configurações) — aplicadas via
+   atributos no <html> pelo PreferencesApplier e pelo script
+   anti-flash que lê o cookie indash-prefs.
+   ============================================================ */
+
+/* Tamanho da fonte: tudo usa rem, então escalar a raiz escala o app */
+html[data-font-size="sm"] {
+  font-size: 14px;
+}
+html[data-font-size="lg"] {
+  font-size: 18px;
+}
+
+/* Estilo da fonte */
+html[data-font="serif"] body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+html[data-font="mono"] body {
+  font-family: var(--font-geist-mono), ui-monospace, "Cascadia Mono",
+    "Courier New", monospace;
+}
+
+/* Alto contraste: bordas e textos secundários mais fortes */
+html[data-contrast="high"] {
+  --border: oklch(0.5 0 0);
+  --input: oklch(0.5 0 0);
+  --muted-foreground: oklch(0.32 0 0);
+}
+html.dark[data-contrast="high"] {
+  --border: oklch(1 0 0 / 40%);
+  --input: oklch(1 0 0 / 45%);
+  --muted-foreground: oklch(0.85 0 0);
+}
