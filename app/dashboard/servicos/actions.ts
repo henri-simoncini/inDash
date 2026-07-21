@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/supabase/require-user";
 import {
   multiplierSchema,
   serviceSchema,
@@ -13,19 +13,11 @@ const INVALID = "Dados inválidos. Confira os campos.";
 const EXPIRED = "Sessão expirada. Entre novamente.";
 const GENERIC = "Algo deu errado. Tente novamente.";
 
-async function getUser() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return { supabase, user };
-}
-
 export async function createService(values: ServiceValues) {
   const parsed = serviceSchema.safeParse(values);
   if (!parsed.success) return { error: INVALID };
 
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase.from("services").insert({
@@ -45,7 +37,7 @@ export async function updateService(id: string, values: ServiceValues) {
   const parsed = serviceSchema.safeParse(values);
   if (!parsed.success) return { error: INVALID };
 
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase
@@ -64,7 +56,7 @@ export async function updateService(id: string, values: ServiceValues) {
 }
 
 export async function deleteService(id: string) {
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase.from("services").delete().eq("id", id);
@@ -88,7 +80,7 @@ export async function createMultiplier(values: MultiplierValues) {
   const parsed = multiplierSchema.safeParse(values);
   if (!parsed.success) return { error: INVALID };
 
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase.from("multipliers").insert({
@@ -108,7 +100,7 @@ export async function updateMultiplier(id: string, values: MultiplierValues) {
   const parsed = multiplierSchema.safeParse(values);
   if (!parsed.success) return { error: INVALID };
 
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase
@@ -128,7 +120,7 @@ export async function updateMultiplier(id: string, values: MultiplierValues) {
 }
 
 export async function deleteMultiplier(id: string) {
-  const { supabase, user } = await getUser();
+  const { supabase, user } = await requireUser();
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase.from("multipliers").delete().eq("id", id);
