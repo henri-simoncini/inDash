@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppSidebar } from "@/components/app-sidebar";
+import { MobileHeader } from "@/components/mobile-header";
 import { InterfaceTour } from "@/components/onboarding/interface-tour";
 import { PreferencesApplier } from "@/components/settings/preferences-applier";
 import type { AppearancePrefs } from "@/lib/apply-preferences";
@@ -45,13 +46,22 @@ export default async function DashboardLayout({
     highContrast: preferences?.high_contrast ?? false,
   };
 
+  const userName = profile?.full_name ?? "Sem nome";
+  const userEmail = user.email ?? "";
+
   return (
-    <div className="flex min-h-svh">
-      <AppSidebar
-        userName={profile?.full_name ?? "Sem nome"}
-        userEmail={user.email ?? ""}
-      />
-      <main className="flex-1 overflow-y-auto p-6">{children}</main>
+    <div className="flex min-h-svh flex-col md:flex-row">
+      <a
+        href="#conteudo"
+        className="sr-only z-50 rounded-md bg-primary px-3 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
+      >
+        Pular para o conteúdo
+      </a>
+      <AppSidebar userName={userName} userEmail={userEmail} />
+      <MobileHeader userName={userName} userEmail={userEmail} />
+      <main id="conteudo" className="flex-1 overflow-y-auto p-4 md:p-6">
+        {children}
+      </main>
       <InterfaceTour show={!tourSeen?.completed} />
       <PreferencesApplier prefs={prefs} />
     </div>

@@ -17,8 +17,14 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="flex min-h-svh flex-col">
+      <a
+        href="#conteudo"
+        className="sr-only z-50 rounded-md bg-primary px-3 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
+      >
+        Pular para o conteúdo
+      </a>
       <LandingHeader />
-      <main className="flex-1">
+      <main id="conteudo" className="flex-1">
         <Hero />
         <Features />
         <AboutDeveloper />
