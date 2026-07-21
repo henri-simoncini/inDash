@@ -1,7 +1,30 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { LandingHeader } from "@/components/landing/landing-header";
+import { Hero } from "@/components/landing/hero";
+import { Features } from "@/components/landing/features";
+import {
+  AboutDeveloper,
+  FinalCta,
+  LandingFooter,
+} from "@/components/landing/about-and-footer";
 
-// Placeholder até a landing page (Fase 10): manda para o app.
-// Deslogado, o proxy redireciona para /sign-in.
+export const metadata: Metadata = {
+  title: "inDash — Gestão para freelancers",
+  description:
+    "Serviços, clientes, agenda, projetos e pagamentos num painel só. Feito para freelancers que hoje se viram com planilha e WhatsApp.",
+};
+
 export default function HomePage() {
-  redirect("/dashboard");
+  return (
+    <div className="flex min-h-svh flex-col">
+      <LandingHeader />
+      <main className="flex-1">
+        <Hero />
+        <Features />
+        <AboutDeveloper />
+        <FinalCta />
+      </main>
+      <LandingFooter />
+    </div>
+  );
 }
