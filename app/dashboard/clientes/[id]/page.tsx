@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FolderKanban, Mail, Phone } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { formatBRL } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -10,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ClientHeaderActions } from "@/components/clients/client-header-actions";
+import { StatusBadge } from "@/components/projects/status-badge";
 
 export const metadata = { title: "Cliente — inDash" };
 
@@ -28,6 +30,12 @@ export default async function ClienteDetailPage({
     .single();
 
   if (!client) notFound();
+
+  const { data: projects } = await supabase
+    .from("projects")
+    .select("id, title, status, final_price, created_at, services(name)")
+    .eq("client_id", id)
+    .order("created_at", { ascending: false });
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
@@ -112,16 +120,44 @@ export default async function ClienteDetailPage({
           <CardTitle>Projetos</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed px-6 py-10 text-center">
-            <FolderKanban
-              className="size-8 text-muted-foreground"
-              aria-hidden
-            />
-            <p className="text-sm text-muted-foreground">
-              Os projetos deste cliente aparecerão aqui quando o módulo de
-              projetos estiver disponível.
-            </p>
-          </div>
+          {!projects || projects.length === 0 ? (
+            <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed px-6 py-10 text-center">
+              <FolderKanban
+                className="size-8 text-muted-foreground"
+                aria-hidden
+              />
+              <p className="text-sm text-muted-foreground">
+                Nenhum projeto com este cliente ainda. Crie um na aba Projetos.
+              </p>
+            </div>
+          ) : (
+            <ul className="divide-y">
+              {projects.map((project) => (
+                <li key={project.id}>
+                  <Link
+                    href={`/dashboard/projetos/${project.id}`}
+                    className="flex flex-wrap items-center justify-between gap-2 py-3 hover:bg-muted/50"
+                  >
+                    <div>
+                      <p className="font-medium">{project.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {project.services?.name ?? "Serviço removido"} ·{" "}
+                        {new Date(project.created_at).toLocaleDateString(
+                          "pt-BR"
+                        )}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold tabular-nums">
+                        {formatBRL(project.final_price)}
+                      </span>
+                      <StatusBadge status={project.status} />
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </CardContent>
       </Card>
     </div>
