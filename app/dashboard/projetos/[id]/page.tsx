@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Wallet } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { formatBRL, formatFactor } from "@/lib/format";
 import {
@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { StatusBadge } from "@/components/projects/status-badge";
 import { ProjectActions } from "@/components/projects/project-actions";
 import { TaskList } from "@/components/projects/task-list";
+import { ProjectPayments } from "@/components/payments/project-payments";
 
 export const metadata = { title: "Projeto — inDash" };
 
@@ -35,7 +36,7 @@ export default async function ProjetoDetailPage({
   const { id } = await params;
   const supabase = await createClient();
 
-  const [{ data: project }, { data: tasks }, { data: applied }] =
+  const [{ data: project }, { data: tasks }, { data: applied }, { data: payments }] =
     await Promise.all([
       supabase
         .from("projects")
@@ -52,6 +53,11 @@ export default async function ProjetoDetailPage({
         .from("project_multipliers")
         .select("factor_snapshot, multipliers(name)")
         .eq("project_id", id),
+      supabase
+        .from("payments")
+        .select("*")
+        .eq("project_id", id)
+        .order("created_at"),
     ]);
 
   if (!project) notFound();
@@ -182,12 +188,11 @@ export default async function ProjetoDetailPage({
               <CardTitle>Pagamento</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-6 text-center">
-                <Wallet className="size-6 text-muted-foreground" aria-hidden />
-                <p className="text-sm text-muted-foreground">
-                  O registro de pagamentos chega com o módulo Financeiro.
-                </p>
-              </div>
+              <ProjectPayments
+                projectId={project.id}
+                finalPrice={project.final_price}
+                payments={payments ?? []}
+              />
             </CardContent>
           </Card>
         </div>
