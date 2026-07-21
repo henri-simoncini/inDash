@@ -26,6 +26,10 @@ import {
 import { EarningsChart } from "@/components/finance/earnings-chart";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { StatusBadge } from "@/components/projects/status-badge";
+import {
+  OnboardingChecklist,
+  type OnboardingStep,
+} from "@/components/onboarding/onboarding-checklist";
 
 export const metadata = { title: "Dashboard — inDash" };
 
@@ -38,8 +42,10 @@ export default async function DashboardPage() {
     { data: projects },
     { count: activeClients },
     { count: servicesCount },
+    { count: multipliersCount },
+    { count: tasksCount },
   ] = await Promise.all([
-    supabase.from("profiles").select("full_name").single(),
+    supabase.from("profiles").select("full_name, onboarding_completed").single(),
     supabase.from("payments").select("amount, status, paid_at"),
     supabase
       .from("projects")
@@ -51,27 +57,82 @@ export default async function DashboardPage() {
       .select("id", { count: "exact", head: true })
       .eq("archived", false),
     supabase.from("services").select("id", { count: "exact", head: true }),
+    supabase.from("multipliers").select("id", { count: "exact", head: true }),
+    supabase.from("tasks").select("id", { count: "exact", head: true }),
   ]);
 
   const allPayments = payments ?? [];
   const allProjects = projects ?? [];
 
-  // Primeiro acesso: nada cadastrado ainda
+  const hasPaidPayment = allPayments.some((p) => p.status === "pago");
+  const coreSteps = [
+    {
+      id: "servicos",
+      label: "Cadastre seus serviços",
+      href: "/dashboard/servicos",
+      done: (servicesCount ?? 0) > 0,
+    },
+    {
+      id: "clientes",
+      label: "Cadastre e agende clientes para seus serviços",
+      href: "/dashboard/clientes",
+      done:
+        (activeClients ?? 0) > 0 &&
+        allProjects.some((p) => p.scheduled_at !== null),
+    },
+    {
+      id: "fatores",
+      label: "Estipule valores e fatores multiplicativos (ex.: complexidade, prazo)",
+      href: "/dashboard/servicos",
+      done: (multipliersCount ?? 0) > 0,
+    },
+    {
+      id: "tasks",
+      label: "Crie TO-DO lists para cada projeto e vá marcando",
+      href: "/dashboard/projetos",
+      done: (tasksCount ?? 0) > 0,
+    },
+    {
+      id: "pagamento",
+      label: "Receba o pagamento",
+      href: "/dashboard/projetos",
+      done: hasPaidPayment,
+    },
+  ];
+  const onboardingSteps: OnboardingStep[] = [
+    ...coreSteps,
+    {
+      id: "estatisticas",
+      label: "Consulte o Dashboard com as estatísticas e acompanhe seu desempenho",
+      href: null,
+      done: coreSteps.every((s) => s.done),
+    },
+  ];
+  const checklist = profile?.onboarding_completed ? null : (
+    <OnboardingChecklist steps={onboardingSteps} />
+  );
+
+  // Primeiro acesso: nada cadastrado ainda — o checklist guia o começo
   if ((servicesCount ?? 0) === 0 && allProjects.length === 0) {
     return (
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 py-24 text-center">
-        <Rocket className="size-10 text-primary" aria-hidden />
-        <h1 className="text-2xl font-bold tracking-tight">
-          Bem-vindo ao inDash{profile?.full_name ? `, ${profile.full_name.split(" ")[0]}` : ""}!
-        </h1>
-        <p className="max-w-md text-muted-foreground">
-          Seu painel de gestão de freelas. Comece cadastrando os serviços que
-          você oferece — depois é só agendar clientes, acompanhar projetos e
-          ver os ganhos aparecerem por aqui.
-        </p>
-        <Link href="/dashboard/servicos" className={buttonVariants()}>
-          Cadastrar meu primeiro serviço
-        </Link>
+      <div className="mx-auto max-w-2xl space-y-6 py-12">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Rocket className="size-10 text-primary" aria-hidden />
+          <h1 className="text-2xl font-bold tracking-tight">
+            Bem-vindo ao inDash{profile?.full_name ? `, ${profile.full_name.split(" ")[0]}` : ""}!
+          </h1>
+          <p className="max-w-md text-muted-foreground">
+            Seu painel de gestão de freelas. Siga os passos abaixo — em poucos
+            minutos você tem tudo rodando.
+          </p>
+        </div>
+        {checklist ?? (
+          <div className="text-center">
+            <Link href="/dashboard/servicos" className={buttonVariants()}>
+              Cadastrar meu primeiro serviço
+            </Link>
+          </div>
+        )}
       </div>
     );
   }
@@ -151,6 +212,8 @@ export default async function DashboardPage() {
           O resumo do seu trabalho, num lugar só.
         </p>
       </div>
+
+      {checklist}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
