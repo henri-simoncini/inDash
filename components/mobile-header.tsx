@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LogOut, Menu } from "lucide-react";
 import { signOut } from "@/app/(auth)/actions";
 import { isNavItemActive, navItems } from "@/components/nav-items";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -31,8 +32,8 @@ export function MobileHeader({
 
   return (
     <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b bg-background/90 px-4 backdrop-blur md:hidden">
-      <Link href="/dashboard" className="text-lg font-bold tracking-tight">
-        in<span className="text-primary">Dash</span>
+      <Link href="/dashboard" aria-label="inDash — ir para o dashboard">
+        <Logo size="sm" />
       </Link>
       <Button
         variant="ghost"
@@ -46,8 +47,8 @@ export function MobileHeader({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="left" className="w-72 gap-0 p-0">
           <SheetTitle className="sr-only">Menu de navegação</SheetTitle>
-          <div className="flex h-14 items-center border-b px-4 text-lg font-bold tracking-tight">
-            in<span className="text-primary">Dash</span>
+          <div className="flex h-14 items-center border-b px-4">
+            <Logo size="sm" />
           </div>
           <nav className="flex-1 space-y-1 overflow-y-auto p-2">
             {navItems.map(({ href, label, icon: Icon }) => {

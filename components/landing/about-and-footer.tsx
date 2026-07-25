@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Logo } from "@/components/logo";
 
 export function AboutDeveloper() {
   return (
@@ -80,9 +81,8 @@ export function LandingFooter() {
   return (
     <footer className="border-t px-4 py-8">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-sm text-muted-foreground sm:flex-row">
-        <p>
-          in<span className="font-semibold text-primary">Dash</span> ·{" "}
-          {new Date().getFullYear()}
+        <p className="flex items-center gap-2">
+          <Logo size="sm" /> · {new Date().getFullYear()}
         </p>
         <div className="flex gap-4">
           <Link

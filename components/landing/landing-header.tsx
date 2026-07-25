@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
 
 export function LandingHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="text-lg font-bold tracking-tight">
-          in<span className="text-primary">Dash</span>
+        <Link href="/" aria-label="inDash — página inicial">
+          <Logo />
         </Link>
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
           <a href="#recursos" className="transition-colors hover:text-foreground">

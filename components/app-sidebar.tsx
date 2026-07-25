@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { signOut } from "@/app/(auth)/actions";
 import { isNavItemActive, navItems } from "@/components/nav-items";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -20,8 +21,8 @@ export function AppSidebar({
   return (
     <aside className="hidden h-svh w-60 shrink-0 flex-col border-r bg-sidebar text-sidebar-foreground md:flex">
       <div className="flex h-14 items-center border-b px-4">
-        <Link href="/dashboard" className="text-lg font-bold tracking-tight">
-          in<span className="text-primary">Dash</span>
+        <Link href="/dashboard" aria-label="inDash — ir para o dashboard">
+          <Logo size="sm" />
         </Link>
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-2">
