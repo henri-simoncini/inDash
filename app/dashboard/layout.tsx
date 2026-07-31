@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 import { InterfaceTour } from "@/components/onboarding/interface-tour";
@@ -11,6 +12,12 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Deploy sem as variáveis do Supabase: manda para o login, que explica
+  // a situação, em vez de estourar erro ao criar o client.
+  if (!isSupabaseConfigured) {
+    redirect("/sign-in");
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
