@@ -1,4 +1,5 @@
 import type { AuthError } from "@supabase/supabase-js";
+import { supabaseHost } from "@/lib/supabase/config";
 
 // Mensagens específicas para os erros que o usuário consegue agir em cima.
 const MESSAGES: Record<string, string> = {
@@ -26,6 +27,14 @@ const MESSAGES: Record<string, string> = {
 export function authErrorMessage(error: AuthError, fallback: string) {
   if (error.code && MESSAGES[error.code]) {
     return MESSAGES[error.code];
+  }
+
+  // Falha de rede: o host configurado não respondeu. Citar o host transforma
+  // um "fetch failed" opaco em algo que dá para conferir na hora.
+  if (/fetch failed|network|ENOTFOUND|ECONNREFUSED|timeout/i.test(error.message)) {
+    return `Não foi possível conectar ao Supabase em ${
+      supabaseHost ?? "host não configurado"
+    }. Confira o valor de NEXT_PUBLIC_SUPABASE_URL.`;
   }
 
   const detail = [error.message, error.code && `código: ${error.code}`]
