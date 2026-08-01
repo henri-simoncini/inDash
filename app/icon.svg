@@ -1,16 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 132">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#6366F1"/>
-      <stop offset="55%" stop-color="#3B5BE8"/>
-      <stop offset="100%" stop-color="#1D4ED8"/>
+    <linearGradient id="face" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%" stop-color="#5B96FF"/>
+      <stop offset="42%" stop-color="#3070EE"/>
+      <stop offset="44%" stop-color="#2159DF"/>
+      <stop offset="100%" stop-color="#1233A6"/>
     </linearGradient>
   </defs>
   <rect width="132" height="132" rx="28" fill="#0A0A0F"/>
-  <g transform="translate(2.09 25.02) scale(0.819)">
-    <path fill-rule="evenodd" fill="url(#g)" d="M40 96 L29.65 68 L64 68 L70 54 L24.48 54 L18.57 38 L80 38 L86 24 L13.39 24 L6 4 L104 4 A46 46 0 0 1 104 96 Z M87 50 a19 19 0 1 0 38 0 a19 19 0 1 0 -38 0 Z"/>
-    <path fill="#22D3EE" d="M46 76 H58 L52 90 H40 Z"/>
-    <path d="M72 86 L124 30" stroke="#22D3EE" stroke-width="10" stroke-linecap="round"/>
-    <path fill="#22D3EE" d="M140 14 L135.97 40.33 L114.03 19.87 Z"/>
+  <g transform="translate(10 31.85) scale(0.644)">
+    <g transform="translate(24 0) skewX(-12.5)">
+      <g transform="translate(2.2 2.2)">
+        <path fill-rule="evenodd" fill="#0A1E63" d="M0 46.3 H21.3 V102 H0 Z M31.1 16.2 H67.7 V102 H31.1 Z M78.6 2 H107.3 A50 50 0 0 1 107.3 102 H78.6 Z M108.6 23.5 A20.8 26.75 0 0 1 108.6 77 Z"/>
+      </g>
+      <path fill-rule="evenodd" fill="url(#face)" stroke="#9CC4FF" stroke-width="1.1" d="M0 46.3 H21.3 V102 H0 Z M31.1 16.2 H67.7 V102 H31.1 Z M78.6 2 H107.3 A50 50 0 0 1 107.3 102 H78.6 Z M108.6 23.5 A20.8 26.75 0 0 1 108.6 77 Z"/>
+    </g>
   </g>
 </svg>
