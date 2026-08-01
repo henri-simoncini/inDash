@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 import {
   signInSchema,
   signUpSchema,
@@ -10,7 +11,13 @@ import {
   type SignUpValues,
 } from "@/lib/validations/auth";
 
+const NOT_CONFIGURED =
+  "Este ambiente está sem as credenciais do Supabase, então o login não " +
+  "funciona por aqui. Avise o responsável pelo site.";
+
 export async function signIn(values: SignInValues) {
+  if (!isSupabaseConfigured) return { error: NOT_CONFIGURED };
+
   const parsed = signInSchema.safeParse(values);
   if (!parsed.success) {
     return { error: "Dados inválidos. Confira os campos." };
@@ -27,6 +34,8 @@ export async function signIn(values: SignInValues) {
 }
 
 export async function signUp(values: SignUpValues) {
+  if (!isSupabaseConfigured) return { error: NOT_CONFIGURED };
+
   const parsed = signUpSchema.safeParse(values);
   if (!parsed.success) {
     return { error: "Dados inválidos. Confira os campos." };
@@ -54,6 +63,8 @@ export async function signUp(values: SignUpValues) {
 }
 
 export async function signInWithGoogle() {
+  if (!isSupabaseConfigured) return { error: NOT_CONFIGURED };
+
   const origin = (await headers()).get("origin");
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
