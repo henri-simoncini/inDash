@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { authErrorMessage } from "@/lib/auth-errors";
 import {
   signInSchema,
   signUpSchema,
@@ -27,7 +28,8 @@ export async function signIn(values: SignInValues) {
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
 
   if (error) {
-    return { error: "Email ou senha incorretos." };
+    console.error("[inDash] Falha no login:", error.code, error.message);
+    return { error: authErrorMessage(error, "Não foi possível entrar.") };
   }
 
   redirect("/dashboard");
@@ -53,10 +55,10 @@ export async function signUp(values: SignUpValues) {
   });
 
   if (error) {
-    if (error.code === "user_already_exists") {
-      return { error: "Já existe uma conta com esse email." };
-    }
-    return { error: "Não foi possível criar a conta. Tente novamente." };
+    console.error("[inDash] Falha no cadastro:", error.code, error.message);
+    return {
+      error: authErrorMessage(error, "Não foi possível criar a conta."),
+    };
   }
 
   return { success: true };
