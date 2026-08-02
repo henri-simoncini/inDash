@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Poppins } from "next/font/google";
+import { Barlow, Geist_Mono, Jersey_10 } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-// Aponta direto para --font-sans, a variável que o tema (shadcn) consome
-const poppins = Poppins({
+// Corpo: aponta direto para --font-sans, a variável que o tema (shadcn) consome
+const barlow = Barlow({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+// Títulos: display pixelado da identidade
+const jersey = Jersey_10({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const geistMono = Geist_Mono({
@@ -28,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${poppins.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${barlow.variable} ${jersey.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

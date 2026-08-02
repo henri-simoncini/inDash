@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { LandingHeader } from "@/components/landing/landing-header";
 import { Hero } from "@/components/landing/hero";
+import { ManagementSection } from "@/components/landing/management-section";
 import { Features } from "@/components/landing/features";
+import { SoundGate } from "@/components/landing/sound-gate";
 import {
   AboutDeveloper,
   FinalCta,
@@ -16,7 +18,11 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="flex min-h-svh flex-col">
+    // A landing é sempre escura, como no design — não segue o tema da conta.
+    <div className="dark flex min-h-svh flex-col bg-background text-foreground">
+      {/* O wrapper é escuro, mas o body continuaria claro e apareceria no
+          overscroll — daí pintar a raiz enquanto a landing está montada. */}
+      <style>{`html,body{background-color:oklch(0.159 0.016 266.59);color-scheme:dark}`}</style>
       {/* Sem JS o Anime.js nunca revela os blocos — devolve a visibilidade. */}
       <noscript>
         <style>{`[data-reveal]{opacity:1 !important;transform:none !important}`}</style>
@@ -30,11 +36,13 @@ export default function HomePage() {
       <LandingHeader />
       <main id="conteudo" className="flex-1">
         <Hero />
+        <ManagementSection />
         <Features />
         <AboutDeveloper />
         <FinalCta />
       </main>
       <LandingFooter />
+      <SoundGate />
     </div>
   );
 }

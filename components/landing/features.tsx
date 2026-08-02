@@ -8,12 +8,14 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/landing/reveal";
+import { TypedBlock } from "@/components/landing/typed-block";
 
 function FeatureSection({
   id,
   icon: Icon,
   eyebrow,
   title,
+  accent,
   description,
   mockup,
   reverse,
@@ -22,6 +24,8 @@ function FeatureSection({
   icon: LucideIcon;
   eyebrow: string;
   title: string;
+  /** Trecho final do título destacado em azul */
+  accent?: string;
   description: string;
   mockup: React.ReactNode;
   reverse?: boolean;
@@ -34,20 +38,14 @@ function FeatureSection({
           reverse && "lg:flex-row-reverse"
         )}
       >
-        <Reveal
-          direction={reverse ? "right" : "left"}
-          className="flex-1 space-y-3 text-center lg:text-left"
-        >
-          <p className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium text-primary">
+        <div className="flex-1 space-y-3">
+          <p className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
             <Icon className="size-3.5" aria-hidden /> {eyebrow}
           </p>
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {title}
-          </h2>
-          <p className="mx-auto max-w-md text-muted-foreground lg:mx-0">
-            {description}
-          </p>
-        </Reveal>
+          <TypedBlock title={title} accent={accent}>
+            <p className="max-w-md text-muted-foreground">{description}</p>
+          </TypedBlock>
+        </div>
         <Reveal
           direction={reverse ? "left" : "right"}
           delay={120}
@@ -212,18 +210,20 @@ function BoardMockup() {
 
 export function Features() {
   return (
-    <div id="recursos" className="border-t bg-muted/30">
+    <div id="recursos" className="border-t border-white/5 bg-white/[0.02]">
       <FeatureSection
         icon={LayoutDashboard}
         eyebrow="Projetos"
-        title="Do agendamento à entrega, sem perder o fio"
+        title="Do agendamento à entrega, sem"
+        accent="post-it."
         description="Cada projeto tem cliente, serviço, prazo e uma TO-DO list própria. O mural mostra tudo por status — e finaliza só quando as tarefas acabam."
         mockup={<BoardMockup />}
       />
       <FeatureSection
         icon={CalendarDays}
         eyebrow="Agenda"
-        title="Sua semana num calendário limpo"
+        title="Sua semana num calendário"
+        accent="limpo."
         description="Projetos agendados aparecem no mês, com horário e status. Clicou, caiu no projeto."
         mockup={<AgendaMockup />}
         reverse
@@ -231,14 +231,16 @@ export function Features() {
       <FeatureSection
         icon={Users}
         eyebrow="Clientes"
-        title="Todo cliente com histórico e contato à mão"
+        title="Todo cliente com histórico e contato"
+        accent="à mão."
         description="Busca rápida, notas e a lista de projetos de cada um. Sem caçar conversa antiga no WhatsApp."
         mockup={<ClientsMockup />}
       />
       <FeatureSection
         icon={Wallet}
         eyebrow="Financeiro"
-        title="Preço justo, calculado — e recebido"
+        title="Preço justo, calculado —"
+        accent="e recebido."
         description="Fatores multiplicativos (urgência, complexidade) ajustam o preço na criação do projeto. Depois é registrar pagamentos e ver o que falta entrar."
         mockup={<FinanceMockup />}
         reverse
@@ -246,7 +248,8 @@ export function Features() {
       <FeatureSection
         icon={BarChart3}
         eyebrow="Estatísticas"
-        title="Seu desempenho, em números"
+        title="Seu desempenho,"
+        accent="em números."
         description="Ganhos por dia, semana, mês e ano. Ticket médio, entregas e comparação com o mês anterior — pra decidir com dados, não no chute."
         mockup={<StatsMockup />}
       />

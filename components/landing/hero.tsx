@@ -1,77 +1,94 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { TypedBlock } from "@/components/landing/typed-block";
 
-// Mockup do dashboard feito em CSS — não envelhece como screenshot
-function DashboardMockup() {
-  const bars = [35, 55, 40, 70, 60, 90];
+// Ilustração do hero: três séries subindo sobre um histograma discreto
+function HeroChart() {
+  const bars = [
+    12, 18, 10, 22, 16, 26, 20, 32, 24, 38, 30, 44, 34, 52, 40, 60, 46, 70, 54,
+    82,
+  ];
+
   return (
-    <div
-      className="mx-auto w-full max-w-3xl rounded-xl border bg-card p-4 shadow-lg sm:p-6"
-      aria-hidden
+    <svg
+      viewBox="0 0 320 200"
+      className="h-auto w-full max-w-lg"
+      aria-hidden="true"
     >
-      <div className="grid gap-3 sm:grid-cols-3">
-        {[
-          { label: "Recebido no mês", value: "R$ 4.250", accent: true },
-          { label: "A receber", value: "R$ 1.800" },
-          { label: "Em andamento", value: "5 projetos" },
-        ].map((card) => (
-          <div key={card.label} className="rounded-lg border p-3 text-left">
-            <p className="text-xs text-muted-foreground">{card.label}</p>
-            <p
-              className={`mt-1 text-lg font-bold tabular-nums ${
-                card.accent ? "text-emerald-600 dark:text-emerald-400" : ""
-              }`}
-            >
-              {card.value}
-            </p>
-          </div>
+      <g opacity="0.55">
+        {bars.map((h, i) => (
+          <rect
+            key={i}
+            x={6 + i * 15.6}
+            y={190 - h}
+            width="9"
+            height={h}
+            rx="1.5"
+            fill="#2563EB"
+            opacity={0.35 + (i / bars.length) * 0.5}
+          />
         ))}
-      </div>
-      <div className="mt-4 rounded-lg border p-3">
-        <p className="text-left text-xs text-muted-foreground">
-          Ganhos dos últimos 6 meses
-        </p>
-        <div className="mt-3 flex h-24 items-end gap-2">
-          {bars.map((height, index) => (
-            <div
-              key={index}
-              className="flex-1 rounded-t bg-emerald-600/80 dark:bg-emerald-500/80"
-              style={{ height: `${height}%` }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+      </g>
+      <polyline
+        points="10,150 60,120 105,135 150,95 195,110 240,60 290,30"
+        fill="none"
+        stroke="#22C55E"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <polyline
+        points="10,170 60,145 105,158 150,120 195,140 240,95 290,58"
+        fill="none"
+        stroke="#EF4444"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <polyline
+        points="10,182 60,162 105,172 150,140 195,155 240,118 290,82"
+        fill="none"
+        stroke="#3B82F6"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M290 30 L278 44 L296 46 Z" fill="#22C55E" />
+    </svg>
   );
 }
 
 export function Hero() {
   return (
-    <section className="px-4 pb-20 pt-16 text-center sm:pt-24">
-      <div className="mx-auto max-w-3xl space-y-6">
-        <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-          Seus freelas, organizados{" "}
-          <span className="text-primary">de verdade</span>.
-        </h1>
-        <p className="mx-auto max-w-xl text-lg text-muted-foreground">
-          Serviços, clientes, agenda, projetos e pagamentos num painel só —
-          feito pra quem hoje se vira com planilha e WhatsApp.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link href="/sign-up" className={buttonVariants({ size: "lg" })}>
-            Começar agora <ArrowRight aria-hidden />
-          </Link>
-          <a
-            href="#recursos"
-            className={buttonVariants({ variant: "outline", size: "lg" })}
-          >
-            Ver recursos
-          </a>
+    <section className="px-4 py-20 sm:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+        <TypedBlock
+          as="h1"
+          title="Seus projetos, organizados"
+          accent="de verdade."
+          titleClassName="text-4xl sm:text-5xl lg:text-6xl"
+        >
+          <p className="max-w-md text-muted-foreground">
+            Serviços, clientes, agenda, projetos e pagamentos em um painel —
+            chega de planilhas e WhatsApp.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href="/sign-up" className={buttonVariants({ size: "lg" })}>
+              Começar agora <ArrowRight aria-hidden />
+            </Link>
+            <a
+              href="#recursos"
+              className={buttonVariants({ variant: "secondary", size: "lg" })}
+            >
+              Ver recursos
+            </a>
+          </div>
+        </TypedBlock>
+
+        <div className="flex justify-center lg:justify-end">
+          <HeroChart />
         </div>
-      </div>
-      <div className="mt-14">
-        <DashboardMockup />
       </div>
     </section>
   );
