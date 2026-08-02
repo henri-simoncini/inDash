@@ -3,11 +3,12 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/logo";
+import { Reveal } from "@/components/landing/reveal";
 
 export function AboutDeveloper() {
   return (
     <section id="sobre" className="border-t px-4 py-16">
-      <div className="mx-auto max-w-2xl text-center">
+      <Reveal className="mx-auto max-w-2xl text-center">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Sobre o desenvolvedor
         </h2>
@@ -47,7 +48,7 @@ export function AboutDeveloper() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -55,7 +56,7 @@ export function AboutDeveloper() {
 export function FinalCta() {
   return (
     <section className="border-t bg-primary px-4 py-16 text-primary-foreground">
-      <div className="mx-auto max-w-2xl space-y-4 text-center">
+      <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Chega de planilha.
         </h2>
@@ -72,7 +73,7 @@ export function FinalCta() {
         >
           Começar agora <ArrowRight aria-hidden />
         </Link>
-      </div>
+      </Reveal>
     </section>
   );
 }

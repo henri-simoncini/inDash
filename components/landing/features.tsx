@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/landing/reveal";
 
 function FeatureSection({
   id,
@@ -33,7 +34,10 @@ function FeatureSection({
           reverse && "lg:flex-row-reverse"
         )}
       >
-        <div className="flex-1 space-y-3 text-center lg:text-left">
+        <Reveal
+          direction={reverse ? "right" : "left"}
+          className="flex-1 space-y-3 text-center lg:text-left"
+        >
           <p className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium text-primary">
             <Icon className="size-3.5" aria-hidden /> {eyebrow}
           </p>
@@ -43,10 +47,14 @@ function FeatureSection({
           <p className="mx-auto max-w-md text-muted-foreground lg:mx-0">
             {description}
           </p>
-        </div>
-        <div className="w-full max-w-md flex-1" aria-hidden>
-          {mockup}
-        </div>
+        </Reveal>
+        <Reveal
+          direction={reverse ? "left" : "right"}
+          delay={120}
+          className="w-full max-w-md flex-1"
+        >
+          <div aria-hidden>{mockup}</div>
+        </Reveal>
       </div>
     </section>
   );

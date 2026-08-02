@@ -17,6 +17,10 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="flex min-h-svh flex-col">
+      {/* Sem JS o Anime.js nunca revela os blocos — devolve a visibilidade. */}
+      <noscript>
+        <style>{`[data-reveal]{opacity:1 !important;transform:none !important}`}</style>
+      </noscript>
       <a
         href="#conteudo"
         className="sr-only z-50 rounded-md bg-primary px-3 py-2 text-primary-foreground focus:not-sr-only focus:fixed focus:left-3 focus:top-3"

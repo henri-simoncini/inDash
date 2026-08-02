@@ -162,6 +162,13 @@ html[data-font="mono"] body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Os blocos de reveal nascem invisíveis para o Anime.js; sem animação,
+     precisam voltar a aparecer mesmo antes do JS rodar. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Alto contraste: bordas e textos secundários mais fortes */
