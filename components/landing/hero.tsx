@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
 import { TypedBlock } from "@/components/landing/typed-block";
 import { HeroChart } from "@/components/landing/hero-chart";
 
 export function Hero() {
   return (
-    <section className="px-4 py-20 sm:py-28">
+    <section id="inicio" className="px-4 py-20 sm:py-28">
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
         <TypedBlock
           as="h1"
@@ -19,12 +18,15 @@ export function Hero() {
             chega de planilhas e WhatsApp.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/sign-up" className={buttonVariants({ size: "lg" })}>
-              Começar agora <ArrowRight aria-hidden />
+            <Link
+              href="/sign-up"
+              className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-7 py-3.5 font-heading text-lg leading-none text-white transition-opacity hover:opacity-90"
+            >
+              Começar agora <ArrowRight className="size-4" aria-hidden />
             </Link>
             <a
               href="#recursos"
-              className={buttonVariants({ variant: "secondary", size: "lg" })}
+              className="inline-flex items-center rounded-md border border-[#454545] bg-[#202030] px-7 py-3.5 font-heading text-lg leading-none text-white transition-colors hover:border-white/40"
             >
               Ver recursos
             </a>

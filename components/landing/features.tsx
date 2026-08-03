@@ -190,16 +190,38 @@ function BoardMockup() {
       </p>
       <div className="mt-3 space-y-2">
         {[
-          { title: "Logo da Padaria Estrela", progress: "3/5 tarefas", price: "R$ 1.200" },
-          { title: "Site da Ana Fotografia", progress: "1/4 tarefas", price: "R$ 750" },
+          {
+            title: "Logo da Padaria Estrela",
+            percent: 60,
+            progress: "3/5 tarefas",
+            price: "R$ 1.200",
+          },
+          {
+            title: "Site da Ana Fotografia",
+            percent: 25,
+            progress: "1/4 tarefas",
+            price: "R$ 750",
+          },
         ].map((project) => (
-          <div key={project.title} className="rounded-lg border p-3 text-left">
-            <p className="text-sm font-medium">{project.title}</p>
-            <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
-              <span>{project.progress}</span>
-              <span className="font-semibold tabular-nums text-foreground">
-                {project.price}
-              </span>
+          <div
+            key={project.title}
+            className="flex items-center gap-3 rounded-lg border border-white/10 p-3 text-left"
+          >
+            <div className="shrink-0 text-center leading-none">
+              <p className="font-heading text-2xl">
+                <span className="text-gradient">{project.percent}</span>
+                <span className="text-gradient text-sm align-top">%</span>
+              </p>
+              <p className="mt-0.5 text-[0.6rem] text-white">Concluído</p>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium">{project.title}</p>
+              <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
+                <span>{project.progress}</span>
+                <span className="font-heading text-sm text-foreground">
+                  {project.price}
+                </span>
+              </div>
             </div>
           </div>
         ))}

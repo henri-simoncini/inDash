@@ -134,7 +134,7 @@ export function TypedBlock({
       >
         <span aria-hidden="true">
           {base}
-          {highlighted && <span className="text-primary">{highlighted}</span>}
+          {highlighted && <span className="text-gradient">{highlighted}</span>}
           <span
             className="ml-0.5 inline-block w-[0.06em] self-stretch bg-primary align-[-0.08em] motion-safe:animate-caret"
             style={{ height: "0.9em" }}

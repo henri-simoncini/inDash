@@ -13,12 +13,14 @@ export function StatCard({
   value,
   hint,
   hintClassName,
+  valueClassName,
 }: {
   icon: LucideIcon;
   label: string;
   value: string;
   hint?: string;
   hintClassName?: string;
+  valueClassName?: string;
 }) {
   return (
     <Card className="gap-2 py-5">
@@ -28,7 +30,9 @@ export function StatCard({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-bold tabular-nums">{value}</p>
+        <p className={cn("font-heading text-3xl leading-none", valueClassName)}>
+          {value}
+        </p>
         {hint && (
           <p className={cn("text-xs text-muted-foreground", hintClassName)}>
             {hint}

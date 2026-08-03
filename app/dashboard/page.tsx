@@ -220,6 +220,7 @@ export default async function DashboardPage() {
           icon={TrendingUp}
           label="Recebido no mês"
           value={formatBRL(receivedThisMonth)}
+          valueClassName="text-gradient"
           hint={
             delta === null
               ? "mês atual"

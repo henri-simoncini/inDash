@@ -66,7 +66,11 @@ export default async function DashboardLayout({
       </a>
       <AppSidebar userName={userName} userEmail={userEmail} />
       <MobileHeader userName={userName} userEmail={userEmail} />
-      <main id="conteudo" className="flex-1 overflow-y-auto p-4 md:p-6">
+      {/* A sidebar é fixa, então o conteúdo precisa reservar a largura dela */}
+      <main
+        id="conteudo"
+        className="flex-1 p-4 md:ml-60 md:p-6"
+      >
         {children}
       </main>
       <InterfaceTour show={!tourSeen?.completed} />

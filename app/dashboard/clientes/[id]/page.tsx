@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, FolderKanban, Mail, Phone } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { formatBRL } from "@/lib/format";
+import { formatBRL, whatsappLink } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -86,10 +86,15 @@ export default async function ClienteDetailPage({
               <Phone className="size-4 text-muted-foreground" aria-hidden />
               {client.phone ? (
                 <a
-                  href={`tel:${client.phone}`}
+                  href={whatsappLink(client.phone) ?? `tel:${client.phone}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline-offset-4 hover:underline"
                 >
                   {client.phone}
+                  <span className="ml-1.5 text-xs text-muted-foreground">
+                    (WhatsApp)
+                  </span>
                 </a>
               ) : (
                 <span className="text-muted-foreground">Sem telefone</span>
@@ -148,7 +153,7 @@ export default async function ClienteDetailPage({
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-semibold tabular-nums">
+                      <span className="font-heading text-base">
                         {formatBRL(project.final_price)}
                       </span>
                       <StatusBadge status={project.status} />

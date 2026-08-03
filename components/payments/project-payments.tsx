@@ -66,7 +66,7 @@ export function ProjectPayments({
       <div className="space-y-1.5">
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">Recebido</span>
-          <span className="font-medium tabular-nums">
+          <span className="font-heading text-base">
             {formatBRL(totalPaid)}{" "}
             <span className="font-normal text-muted-foreground">
               de {formatBRL(finalPrice)}
@@ -84,7 +84,7 @@ export function ProjectPayments({
               className="flex items-center justify-between gap-2 rounded-lg border p-2.5 text-sm"
             >
               <div className="min-w-0">
-                <p className="font-medium tabular-nums">
+                <p className="font-heading text-base">
                   {formatBRL(payment.amount)}
                 </p>
                 <p className="text-xs text-muted-foreground">

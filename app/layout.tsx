@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import { Barlow, Geist_Mono, Jersey_10 } from "next/font/google";
+import {
+  Barlow,
+  Jersey_10,
+  Kode_Mono,
+  Source_Serif_4,
+} from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { InterfaceSound } from "@/components/interface-sound";
 import "./globals.css";
 
 // Corpo: aponta direto para --font-sans, a variável que o tema (shadcn) consome
@@ -17,8 +23,14 @@ const jersey = Jersey_10({
   weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Opções da preferência de fonte nas Configurações
+const kodeMono = Kode_Mono({
+  variable: "--font-mono-pref",
+  subsets: ["latin"],
+});
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-serif-pref",
   subsets: ["latin"],
 });
 
@@ -35,10 +47,10 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${barlow.variable} ${jersey.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${barlow.variable} ${jersey.variable} ${kodeMono.variable} ${sourceSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className="cursor-pixel min-h-full flex flex-col">
         {/* Anti-flash: aplica tema/fonte do cookie antes da primeira pintura */}
         <script
           dangerouslySetInnerHTML={{
@@ -47,6 +59,7 @@ export default function RootLayout({
         />
         {children}
         <Toaster richColors />
+        <InterfaceSound />
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 // batidas de tecla, das quais tocamos uma fatia aleatória a cada caractere.
 
 const TYPE_SRC = "/sounds/type.mp3";
+const CLICK_SRC = "/sounds/click.mp3";
 
 // Posições (em segundos) das batidas dentro do arquivo, detectadas por
 // análise de amplitude. Cada digitação toca uma delas.
@@ -16,6 +17,7 @@ const MUTE_KEY = "indash-som-mudo";
 
 let audioCtx: AudioContext | null = null;
 let buffer: AudioBuffer | null = null;
+let clickBuffer: AudioBuffer | null = null;
 let loading: Promise<void> | null = null;
 let muted = false;
 
@@ -64,27 +66,50 @@ export function primeTypeSound() {
         (window as unknown as { webkitAudioContext: typeof AudioContext })
           .webkitAudioContext;
       audioCtx = new Ctor();
-      const res = await fetch(TYPE_SRC);
-      buffer = await audioCtx.decodeAudioData(await res.arrayBuffer());
+      const load = async (url: string) => {
+        const res = await fetch(url);
+        return audioCtx!.decodeAudioData(await res.arrayBuffer());
+      };
+      // O clique é leve e vem primeiro; a digitação é um arquivo maior
+      clickBuffer = await load(CLICK_SRC).catch(() => null);
+      buffer = await load(TYPE_SRC).catch(() => null);
     } catch {
-      // Sem áudio disponível: a digitação continua, só que silenciosa.
+      // Sem áudio disponível: a interface continua, só que silenciosa.
       audioCtx = null;
       buffer = null;
+      clickBuffer = null;
     }
   })();
 
   return loading;
 }
 
-export function playKey() {
-  if (muted || !audioCtx || !buffer) return;
+function play(
+  source: AudioBuffer | null,
+  volume: number,
+  offset?: number,
+  duration?: number
+) {
+  if (muted || !audioCtx || !source) return;
   if (audioCtx.state === "suspended") void audioCtx.resume();
 
-  const hit = TYPE_HITS[Math.floor(Math.random() * TYPE_HITS.length)];
   const src = audioCtx.createBufferSource();
-  src.buffer = buffer;
+  src.buffer = source;
   const gain = audioCtx.createGain();
-  gain.gain.value = VOLUME;
+  gain.gain.value = volume;
   src.connect(gain).connect(audioCtx.destination);
-  src.start(0, Math.max(0, hit - 0.005), SLICE_DURATION);
+  if (duration) {
+    src.start(0, offset ?? 0, duration);
+  } else {
+    src.start(0);
+  }
+}
+
+export function playKey() {
+  const hit = TYPE_HITS[Math.floor(Math.random() * TYPE_HITS.length)];
+  play(buffer, VOLUME, Math.max(0, hit - 0.005), SLICE_DURATION);
+}
+
+export function playClick() {
+  play(clickBuffer, 0.55);
 }

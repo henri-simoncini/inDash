@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     // A landing é sempre escura, como no design — não segue o tema da conta.
-    <div className="dark flex min-h-svh flex-col bg-background text-foreground">
+    <div className="landing-root dark flex min-h-svh flex-col bg-background text-foreground">
       {/* O wrapper é escuro, mas o body continuaria claro e apareceria no
           overscroll — daí pintar a raiz enquanto a landing está montada. */}
       <style>{`html,body{background-color:oklch(0.159 0.016 266.59);color-scheme:dark}`}</style>

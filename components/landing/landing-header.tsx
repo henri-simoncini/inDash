@@ -1,30 +1,80 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
+import { cn } from "@/lib/utils";
+
+const SECTIONS = [
+  { id: "inicio", label: "Início" },
+  { id: "recursos", label: "Recursos" },
+  { id: "sobre", label: "Sobre" },
+];
 
 export function LandingHeader() {
+  const [active, setActive] = useState("inicio");
+
+  // Marca no menu a seção que está ocupando a tela
+  useEffect(() => {
+    const targets = SECTIONS.map((s) => document.getElementById(s.id)).filter(
+      (el): el is HTMLElement => el !== null
+    );
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      // a faixa central da tela decide qual seção está "ativa"
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+    <header className="sticky top-0 z-40 border-b border-white/5 bg-background/80 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" aria-label="inDash — página inicial">
           <Logo />
         </Link>
-        <nav className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
-          <a href="#recursos" className="transition-colors hover:text-foreground">
-            Recursos
-          </a>
-          <a href="#sobre" className="transition-colors hover:text-foreground">
-            Sobre
-          </a>
+
+        <nav className="hidden items-center gap-7 text-sm sm:flex">
+          {SECTIONS.map((section) => {
+            const isActive = active === section.id;
+            return (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                aria-current={isActive ? "true" : undefined}
+                className={cn(
+                  "border-b-2 pb-0.5 transition-colors",
+                  isActive
+                    ? "border-primary text-white"
+                    : "border-transparent text-[#C0C0C0] hover:text-white"
+                )}
+              >
+                {section.label}
+              </a>
+            );
+          })}
         </nav>
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-3">
           <Link
             href="/sign-in"
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
+            className="text-sm text-[#C0C0C0] transition-colors hover:text-white"
           >
             Entrar
           </Link>
-          <Link href="/sign-up" className={buttonVariants({ size: "sm" })}>
+          <Link
+            href="/sign-up"
+            className="rounded-md border-[3px] border-[#3895ED] bg-transparent px-5 py-2 font-heading text-base leading-none text-[#3895ED] transition-colors hover:border-transparent hover:bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] hover:text-white"
+          >
             Começar agora
           </Link>
         </div>

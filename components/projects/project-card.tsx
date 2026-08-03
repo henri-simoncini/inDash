@@ -31,7 +31,7 @@ export function ProjectCard({ project }: { project: ProjectListItem }) {
             {project.services?.name ?? "Serviço removido"}
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-            <span className="font-semibold tabular-nums">
+            <span className="font-heading text-base">
               {formatBRL(project.final_price)}
             </span>
             {total > 0 && (

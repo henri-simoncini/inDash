@@ -103,7 +103,7 @@ export function ScrollChart() {
             <div
               key={mes.label}
               data-bar
-              className="flex-1 origin-bottom rounded-t-md bg-primary"
+              className="bg-gradient-brand flex-1 origin-bottom rounded-t-md"
               style={{ height: `${mes.altura}%`, opacity: 0 }}
             />
           ))}
@@ -131,7 +131,7 @@ export function ScrollChart() {
             <p className="text-[0.7rem] text-muted-foreground">{card.label}</p>
             <p
               className={`mt-1 font-heading text-xl ${
-                card.destaque ? "text-primary" : ""
+                card.destaque ? "text-gradient" : ""
               }`}
             >
               {card.valor}

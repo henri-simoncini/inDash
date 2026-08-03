@@ -7,7 +7,7 @@ import { Reveal } from "@/components/landing/reveal";
 
 export function AboutDeveloper() {
   return (
-    <section id="sobre" className="border-t px-4 py-16">
+    <section id="sobre" className="border-t border-white/5 px-4 py-16">
       <Reveal className="mx-auto max-w-2xl text-center">
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Sobre o desenvolvedor
@@ -55,24 +55,22 @@ export function AboutDeveloper() {
 
 export function FinalCta() {
   return (
-    <section className="border-t bg-primary px-4 py-16 text-primary-foreground">
+    <section className="border-t border-white/5 px-4 py-20">
       <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="text-gradient font-heading text-4xl tracking-tight sm:text-5xl">
           Chega de planilha.
         </h2>
-        <p className="text-primary-foreground/80">
+        <p className="text-muted-foreground">
           Crie sua conta e organize seus freelas em minutos.
         </p>
-        <Link
-          href="/sign-up"
-          className={buttonVariants({
-            size: "lg",
-            className:
-              "bg-background text-foreground hover:bg-background/90",
-          })}
-        >
-          Começar agora <ArrowRight aria-hidden />
-        </Link>
+        <div className="pt-2">
+          <Link
+            href="/sign-up"
+            className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-7 py-3.5 font-heading text-lg leading-none text-white transition-opacity hover:opacity-90"
+          >
+            Começar agora <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
       </Reveal>
     </section>
   );

@@ -19,7 +19,7 @@ export function AppSidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden h-svh w-60 shrink-0 flex-col border-r bg-sidebar text-sidebar-foreground md:flex">
+    <aside className="fixed inset-y-0 left-0 z-30 hidden h-svh w-60 shrink-0 flex-col border-r bg-sidebar text-sidebar-foreground md:flex">
       <div className="flex h-14 items-center border-b px-4">
         <Link href="/dashboard" aria-label="inDash — ir para o dashboard">
           <Logo size="sm" />

@@ -108,7 +108,7 @@ export function PaymentsTable({ payments }: { payments: PaymentListItem[] }) {
                   </p>
                 )}
               </TableCell>
-              <TableCell className="text-right font-medium tabular-nums">
+              <TableCell className="text-right font-heading text-base">
                 {formatBRL(payment.amount)}
               </TableCell>
               <TableCell className="text-muted-foreground">
