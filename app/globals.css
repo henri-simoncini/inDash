@@ -190,14 +190,25 @@ html[data-font] .landing-root :not(.font-heading, .font-heading *) {
   background-image: linear-gradient(to bottom, #54a3ed, #3a71fb);
 }
 
-/* Cursor pixelado branco — vale também nos elementos clicáveis, para o
-   ponteiro do sistema não quebrar a estética. */
-.cursor-pixel,
-.cursor-pixel *,
+/* Cursores em pixel art, iguais aos do portfólio (mesma arte e hotspots) */
+.cursor-pixel * {
+  cursor: url("/cursors/arrow.svg") 2 1, auto;
+}
 .cursor-pixel a,
 .cursor-pixel button,
-.cursor-pixel [role="button"] {
-  cursor: url("/cursors/pixel.svg") 2 2, auto;
+.cursor-pixel [role="button"],
+.cursor-pixel [role="menuitem"],
+.cursor-pixel [role="tab"],
+.cursor-pixel [role="switch"],
+.cursor-pixel [role="checkbox"],
+.cursor-pixel label,
+.cursor-pixel summary,
+.cursor-pixel select {
+  cursor: url("/cursors/hand.svg") 6 1, pointer !important;
+}
+.cursor-pixel input:not([type="checkbox"]):not([type="radio"]),
+.cursor-pixel textarea {
+  cursor: text !important;
 }
 
 /* Cursor piscando dos títulos que se digitam */

@@ -57,18 +57,18 @@ export function AboutDeveloper() {
 
 export function FinalCta() {
   return (
-    <section className="border-t border-white/5 px-4 py-20">
+    <section className="bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-4 py-20">
       <Reveal className="mx-auto max-w-2xl space-y-4 text-center">
-        <h2 className="text-gradient font-heading text-4xl tracking-tight sm:text-5xl">
+        <h2 className="font-heading text-4xl tracking-tight text-white sm:text-5xl">
           Chega de planilha.
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-white/85">
           Crie sua conta e organize seus freelas em minutos.
         </p>
         <div className="pt-2">
           <Link
             href="/sign-up"
-            className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-8 py-4 font-heading text-2xl leading-none text-white transition-all duration-200 ease-[ease] hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-md border border-white/40 bg-white px-8 py-4 font-heading text-2xl font-normal leading-none text-[#1660A6] transition-all duration-200 ease-[ease] hover:bg-white/90"
           >
             Começar agora <ArrowRight className="size-5" aria-hidden />
           </Link>

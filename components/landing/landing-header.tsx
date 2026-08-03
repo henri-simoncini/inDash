@@ -73,7 +73,7 @@ export function LandingHeader() {
           </Link>
           <Link
             href="/sign-up"
-            className="rounded-md border-[3px] border-[#3895ED] bg-transparent px-6 py-2 font-heading text-xl leading-none text-[#3895ED] transition-all duration-200 ease-[ease] hover:border-transparent hover:bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] hover:text-white"
+            className="rounded-md border-[3px] border-[#3895ED] bg-transparent px-6 py-2 font-heading text-xl font-normal leading-none text-[#3895ED] transition-all duration-200 ease-[ease] hover:border-transparent hover:bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] hover:text-white"
           >
             Começar agora
           </Link>

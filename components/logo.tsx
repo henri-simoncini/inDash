@@ -38,9 +38,9 @@ export function LogoMark({ className }: { className?: string }) {
 }
 
 const SIZES = {
-  sm: { mark: "h-6", text: "text-base" },
-  md: { mark: "h-7", text: "text-lg" },
-  lg: { mark: "h-16", text: "text-3xl" },
+  sm: { mark: "h-6", text: "text-xl" },
+  md: { mark: "h-7", text: "text-2xl" },
+  lg: { mark: "h-16", text: "text-4xl" },
 } as const;
 
 export function Logo({
