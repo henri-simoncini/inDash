@@ -20,13 +20,13 @@ export function Hero() {
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
               href="/sign-up"
-              className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-7 py-3.5 font-heading text-lg leading-none text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-8 py-4 font-heading text-2xl leading-none text-white transition-all duration-200 ease-[ease] hover:opacity-90"
             >
-              Começar agora <ArrowRight className="size-4" aria-hidden />
+              Começar agora <ArrowRight className="size-5" aria-hidden />
             </Link>
             <a
               href="#recursos"
-              className="inline-flex items-center rounded-md border border-[#454545] bg-[#202030] px-7 py-3.5 font-heading text-lg leading-none text-white transition-colors hover:border-white/40"
+              className="inline-flex items-center rounded-md border border-[#454545] bg-[#202030] px-8 py-4 font-heading text-2xl leading-none text-white transition-all duration-200 ease-[ease] hover:border-white/40"
             >
               Ver recursos
             </a>

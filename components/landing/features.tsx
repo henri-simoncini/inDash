@@ -208,17 +208,17 @@ function BoardMockup() {
             className="flex items-center gap-3 rounded-lg border border-white/10 p-3 text-left"
           >
             <div className="shrink-0 text-center leading-none">
-              <p className="font-heading text-2xl">
+              <p className="font-heading text-4xl">
                 <span className="text-gradient">{project.percent}</span>
-                <span className="text-gradient text-sm align-top">%</span>
+                <span className="text-gradient align-bottom text-xl">%</span>
               </p>
-              <p className="mt-0.5 text-[0.6rem] text-white">Concluído</p>
+              <p className="mt-1 text-[0.7rem] text-white">Concluído</p>
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{project.title}</p>
               <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                 <span>{project.progress}</span>
-                <span className="font-heading text-sm text-foreground">
+                <span className="font-heading text-xl text-foreground">
                   {project.price}
                 </span>
               </div>

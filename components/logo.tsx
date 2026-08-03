@@ -67,7 +67,7 @@ export function Logo({
     >
       <LogoMark className={s.mark} />
       <span className={cn("flex flex-col items-center")}>
-        <span className={cn("font-heading tracking-tight", s.text)}>
+        <span className={cn("font-sans font-bold tracking-tight", s.text)}>
           in<span className="text-gradient">Dash</span>
         </span>
         {tagline && (

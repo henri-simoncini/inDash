@@ -52,7 +52,7 @@ export function LandingHeader() {
                 href={`#${section.id}`}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "border-b-2 pb-0.5 transition-colors",
+                  "border-b-2 pb-0.5 transition-all duration-200 ease-[ease]",
                   isActive
                     ? "border-primary text-white"
                     : "border-transparent text-[#C0C0C0] hover:text-white"
@@ -67,13 +67,13 @@ export function LandingHeader() {
         <div className="flex items-center gap-3">
           <Link
             href="/sign-in"
-            className="text-sm text-[#C0C0C0] transition-colors hover:text-white"
+            className="text-sm text-[#C0C0C0] transition-all duration-200 ease-[ease] hover:text-white"
           >
             Entrar
           </Link>
           <Link
             href="/sign-up"
-            className="rounded-md border-[3px] border-[#3895ED] bg-transparent px-5 py-2 font-heading text-base leading-none text-[#3895ED] transition-colors hover:border-transparent hover:bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] hover:text-white"
+            className="rounded-md border-[3px] border-[#3895ED] bg-transparent px-6 py-2 font-heading text-xl leading-none text-[#3895ED] transition-all duration-200 ease-[ease] hover:border-transparent hover:bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] hover:text-white"
           >
             Começar agora
           </Link>
