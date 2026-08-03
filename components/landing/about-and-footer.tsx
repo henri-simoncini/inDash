@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,17 +10,18 @@ export function AboutDeveloper() {
   return (
     <section id="sobre" className="border-t border-white/5 px-4 py-16">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+        <h2 className="font-heading text-3xl tracking-tight sm:text-4xl">
           Sobre o desenvolvedor
         </h2>
         <Card className="mt-8">
-          <CardContent className="flex flex-col items-center gap-4 px-6 py-2 sm:flex-row sm:text-left">
-            <span
-              className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xl font-bold text-primary"
-              aria-hidden
-            >
-              HS
-            </span>
+          <CardContent className="flex flex-col items-center gap-5 px-6 py-2 sm:flex-row sm:text-left">
+            <Image
+              src="/img/henrique.jpg"
+              alt="Henrique Simoncini"
+              width={88}
+              height={88}
+              className="size-22 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
+            />
             <div className="space-y-2">
               <p className="font-semibold">Henrique Simoncini</p>
               <p className="text-sm text-muted-foreground">

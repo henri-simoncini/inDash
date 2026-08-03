@@ -1,46 +1,37 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Marca do inDash: monograma "iD" em itálico, com face em degradê,
- * borda de bisel clara e sombra que dá o volume 3D.
- *
- * As quatro subformas (barra do i, barra alta, corpo do D e a contraforma)
- * vivem num caminho só: com evenodd a contraforma vira furo, então o vazado
- * assume a cor do fundo e a marca funciona no tema claro e no escuro.
+ * Marca do inDash: barra prateada do "i", o "D" em degradê azul e a seta
+ * branca de crescimento atravessando — a seta é a união de um cantoneira
+ * em L (a ponta) com a faixa diagonal (a haste).
  */
-const SHAPES = [
-  "M0 46.3 H21.3 V102 H0 Z",
-  "M31.1 16.2 H67.7 V102 H31.1 Z",
-  "M78.6 2 H107.3 A50 50 0 0 1 107.3 102 H78.6 Z",
-  "M108.6 23.5 A20.8 26.75 0 0 1 108.6 77 Z",
-].join(" ");
-
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 174 106"
+      viewBox="0 0 104 100"
       className={cn("h-7 w-auto", className)}
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="indash-logo-face" x1="0" y1="0" x2="0.25" y2="1">
-          <stop offset="0%" stopColor="#5B96FF" />
-          <stop offset="42%" stopColor="#3070EE" />
-          <stop offset="44%" stopColor="#2159DF" />
-          <stop offset="100%" stopColor="#1233A6" />
+        <linearGradient id="indash-d" x1="0" y1="0" x2="0.85" y2="1">
+          <stop offset="0%" stopColor="#57A8F0" />
+          <stop offset="55%" stopColor="#2E86DC" />
+          <stop offset="100%" stopColor="#1B69BC" />
+        </linearGradient>
+        <linearGradient id="indash-bar" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#F2F2F2" />
+          <stop offset="100%" stopColor="#C4C4C4" />
+        </linearGradient>
+        <linearGradient id="indash-arrow" x1="0.2" y1="0" x2="0.6" y2="1">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#D8DCE0" />
         </linearGradient>
       </defs>
-      <g transform="translate(24 0) skewX(-12.5)">
-        <g transform="translate(2.2 2.2)">
-          <path fillRule="evenodd" fill="#0A1E63" d={SHAPES} />
-        </g>
-        <path
-          fillRule="evenodd"
-          fill="url(#indash-logo-face)"
-          stroke="#9CC4FF"
-          strokeWidth="1.1"
-          d={SHAPES}
-        />
+      <rect x="2" y="18" width="20" height="74" rx="2" fill="url(#indash-bar)" />
+      <path fill="url(#indash-d)" d="M30 5 H55 A45 45 0 0 1 55 95 H30 Z" />
+      <g fill="url(#indash-arrow)">
+        <path d="M38 22 H78 V62 H64 V36 H38 Z" />
+        <path d="M65.05 25.05 L74.95 34.95 L26.95 82.95 L17.05 73.05 Z" />
       </g>
     </svg>
   );

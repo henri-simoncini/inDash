@@ -185,7 +185,7 @@ function StatsMockup() {
 function BoardMockup() {
   return (
     <div className="rounded-xl border bg-card p-4 shadow-md">
-      <p className="text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      <p className="inline-block border-b border-primary pb-0.5 text-left text-xs font-semibold uppercase tracking-wide text-primary">
         Em andamento
       </p>
       <div className="mt-3 space-y-2">
@@ -194,13 +194,13 @@ function BoardMockup() {
             title: "Logo da Padaria Estrela",
             percent: 60,
             progress: "3/5 tarefas",
-            price: "R$ 1.200",
+            price: "R$ 1.200,00",
           },
           {
             title: "Site da Ana Fotografia",
             percent: 25,
             progress: "1/4 tarefas",
-            price: "R$ 750",
+            price: "R$ 750,00",
           },
         ].map((project) => (
           <div

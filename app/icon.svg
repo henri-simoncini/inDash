@@ -1,19 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 132">
   <defs>
-    <linearGradient id="face" x1="0" y1="0" x2="0.25" y2="1">
-      <stop offset="0%" stop-color="#5B96FF"/>
-      <stop offset="42%" stop-color="#3070EE"/>
-      <stop offset="44%" stop-color="#2159DF"/>
-      <stop offset="100%" stop-color="#1233A6"/>
+    <linearGradient id="d" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#57A8F0"/>
+      <stop offset="55%" stop-color="#2E86DC"/>
+      <stop offset="100%" stop-color="#1B69BC"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F2F2F2"/>
+      <stop offset="100%" stop-color="#C4C4C4"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0.2" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#D8DCE0"/>
     </linearGradient>
   </defs>
-  <rect width="132" height="132" rx="28" fill="#0A0A0F"/>
-  <g transform="translate(10 31.85) scale(0.644)">
-    <g transform="translate(24 0) skewX(-12.5)">
-      <g transform="translate(2.2 2.2)">
-        <path fill-rule="evenodd" fill="#0A1E63" d="M0 46.3 H21.3 V102 H0 Z M31.1 16.2 H67.7 V102 H31.1 Z M78.6 2 H107.3 A50 50 0 0 1 107.3 102 H78.6 Z M108.6 23.5 A20.8 26.75 0 0 1 108.6 77 Z"/>
-      </g>
-      <path fill-rule="evenodd" fill="url(#face)" stroke="#9CC4FF" stroke-width="1.1" d="M0 46.3 H21.3 V102 H0 Z M31.1 16.2 H67.7 V102 H31.1 Z M78.6 2 H107.3 A50 50 0 0 1 107.3 102 H78.6 Z M108.6 23.5 A20.8 26.75 0 0 1 108.6 77 Z"/>
+  <rect width="132" height="132" rx="28" fill="#0A0D14"/>
+  <g transform="translate(13 16) scale(1.02)">
+    <rect x="2" y="18" width="20" height="74" rx="2" fill="url(#bar)"/>
+    <path fill="url(#d)" d="M30 5 H55 A45 45 0 0 1 55 95 H30 Z"/>
+    <g fill="url(#arrow)">
+      <path d="M38 22 H78 V62 H64 V36 H38 Z"/>
+      <path d="M65.05 25.05 L74.95 34.95 L26.95 82.95 L17.05 73.05 Z"/>
     </g>
   </g>
 </svg>
