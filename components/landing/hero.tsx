@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { TypedBlock } from "@/components/landing/typed-block";
-import { MagicBento } from "@/components/landing/magic-bento";
+import { HeroChart } from "@/components/landing/hero-chart";
 
 export function Hero() {
   return (
@@ -31,15 +31,8 @@ export function Hero() {
           </div>
         </TypedBlock>
 
-        <div className="w-full">
-          <MagicBento
-            glowColor="37, 99, 235"
-            spotlightRadius={320}
-            particleCount={10}
-            enableTilt
-            enableMagnetism
-            clickEffect
-          />
+        <div className="relative w-full">
+          <HeroChart />
         </div>
       </div>
     </section>
