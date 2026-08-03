@@ -2,11 +2,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TypedBlock } from "@/components/landing/typed-block";
 import { HeroChart } from "@/components/landing/hero-chart";
+import { HyperspeedBackground } from "@/components/landing/hyperspeed-background";
 
 export function Hero() {
   return (
-    <section id="inicio" className="px-4 py-20 sm:py-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+    <section id="inicio" className="relative overflow-hidden px-4 py-20 sm:py-28">
+      <HyperspeedBackground />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
         <TypedBlock
           as="h1"
           title="Seus projetos, organizados"
