@@ -153,7 +153,7 @@ export default async function ClienteDetailPage({
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="font-heading text-base">
+                      <span className="font-heading text-[1.2rem]">
                         {formatBRL(project.final_price)}
                       </span>
                       <StatusBadge status={project.status} />

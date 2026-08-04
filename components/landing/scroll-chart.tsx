@@ -130,7 +130,7 @@ export function ScrollChart() {
           >
             <p className="text-[0.7rem] text-muted-foreground">{card.label}</p>
             <p
-              className={`mt-1 font-heading text-xl ${
+              className={`mt-1 font-heading text-2xl ${
                 card.destaque ? "text-gradient" : ""
               }`}
             >

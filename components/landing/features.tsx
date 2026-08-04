@@ -218,7 +218,7 @@ function BoardMockup() {
               <p className="truncate text-sm font-medium">{project.title}</p>
               <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                 <span>{project.progress}</span>
-                <span className="font-heading text-xl text-foreground">
+                <span className="font-heading text-2xl text-foreground">
                   {project.price}
                 </span>
               </div>

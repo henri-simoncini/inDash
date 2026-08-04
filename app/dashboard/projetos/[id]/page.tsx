@@ -154,7 +154,7 @@ export default async function ProjetoDetailPage({
               <Separator />
               <div className="flex items-center justify-between font-semibold">
                 <span>Preço final</span>
-                <span className="font-heading text-lg">
+                <span className="font-heading text-[1.35rem]">
                   {formatBRL(project.final_price)}
                 </span>
               </div>

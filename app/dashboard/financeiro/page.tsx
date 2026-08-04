@@ -87,7 +87,7 @@ export default async function FinanceiroPage({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="font-heading text-3xl leading-none">
+                <p className="font-heading text-4xl leading-none">
                   {formatBRL(periodTotal)}
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -102,7 +102,7 @@ export default async function FinanceiroPage({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="font-heading text-3xl leading-none">
+                <p className="font-heading text-4xl leading-none">
                   {formatBRL(totalPaid)}
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -117,7 +117,7 @@ export default async function FinanceiroPage({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="font-heading text-3xl leading-none">
+                <p className="font-heading text-4xl leading-none">
                   {formatBRL(totalPending)}
                 </p>
                 <p className="text-xs text-muted-foreground">

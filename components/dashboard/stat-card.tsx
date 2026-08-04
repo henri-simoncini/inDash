@@ -30,7 +30,7 @@ export function StatCard({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className={cn("font-heading text-3xl leading-none", valueClassName)}>
+        <p className={cn("font-heading text-4xl leading-none", valueClassName)}>
           {value}
         </p>
         {hint && (

@@ -378,7 +378,7 @@ export function ProjectForm({
           <div className="rounded-lg bg-muted p-3 text-sm">
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground">Preço final</span>
-              <span className="font-heading text-lg">
+              <span className="font-heading text-[1.35rem]">
                 {formatBRL(finalPrice)}
               </span>
             </div>

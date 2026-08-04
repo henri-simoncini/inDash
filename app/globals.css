@@ -171,6 +171,17 @@ html[data-font] .landing-root :not(.font-heading, .font-heading *) {
   font-family: var(--font-display), sans-serif;
 }
 
+/* A Jersey 10 só existe em peso 400: qualquer negrito (inclusive herdado de
+   um contêiner) vira falso-negrito e engrossa o traço pixelado. Fora de
+   @layer, esta regra vence as utilidades do Tailwind. */
+.font-heading,
+.font-heading *,
+.landing-root h1,
+.landing-root h2,
+.landing-root h3 {
+  font-weight: 400;
+}
+
 /* ============================================================
    Texto e superfícies em degradê da identidade
    ============================================================ */
