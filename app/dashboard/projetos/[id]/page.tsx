@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { formatBRL, formatFactor } from "@/lib/format";
+import { readPixProfile } from "@/lib/pix-profile";
 import {
   Card,
   CardContent,
@@ -62,10 +63,12 @@ export default async function ProjetoDetailPage({
 
   if (!project) notFound();
 
-  const [{ data: formClients }, { data: formServices }] = await Promise.all([
-    supabase.from("clients").select("id, name").eq("archived", false).order("name"),
-    supabase.from("services").select("id, name, base_price").order("name"),
-  ]);
+  const [{ data: formClients }, { data: formServices }, { data: profile }] =
+    await Promise.all([
+      supabase.from("clients").select("id, name").eq("archived", false).order("name"),
+      supabase.from("services").select("id, name, base_price").order("name"),
+      supabase.from("profiles").select("*").single(),
+    ]);
 
   const snapshotProduct = (applied ?? []).reduce(
     (total, m) => total * m.factor_snapshot,
@@ -190,8 +193,10 @@ export default async function ProjetoDetailPage({
             <CardContent>
               <ProjectPayments
                 projectId={project.id}
+                projectTitle={project.title}
                 finalPrice={project.final_price}
                 payments={payments ?? []}
+                pix={readPixProfile(profile)}
               />
             </CardContent>
           </Card>

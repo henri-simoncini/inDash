@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CircleCheckBig, Plus, Trash2 } from "lucide-react";
+import { CircleCheckBig, Plus, QrCode, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import type { Tables } from "@/lib/database.types";
 import { formatBRL } from "@/lib/format";
@@ -13,19 +13,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { PaymentForm } from "@/components/payments/payment-form";
+import {
+  PixChargeDialog,
+  type PixProfile,
+} from "@/components/payments/pix-charge-dialog";
 
 type Payment = Tables<"payments">;
 
 export function ProjectPayments({
   projectId,
+  projectTitle,
   finalPrice,
   payments,
+  pix,
 }: {
   projectId: string;
+  projectTitle: string;
   finalPrice: number;
   payments: Payment[];
+  pix: PixProfile;
 }) {
   const [formOpen, setFormOpen] = useState(false);
+  const [pixOpen, setPixOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const totalPaid = payments
@@ -132,19 +141,32 @@ export function ProjectPayments({
         </ul>
       )}
 
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={() => setFormOpen(true)}
-      >
-        <Plus /> Registrar pagamento
-      </Button>
+      <div className="grid gap-2">
+        <Button onClick={() => setPixOpen(true)} disabled={suggested <= 0}>
+          <QrCode /> Cobrar via Pix
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => setFormOpen(true)}
+        >
+          <Plus /> Registrar pagamento
+        </Button>
+      </div>
 
       <PaymentForm
         open={formOpen}
         onOpenChange={setFormOpen}
         projectId={projectId}
         suggestedAmount={suggested > 0 ? suggested : finalPrice}
+      />
+
+      <PixChargeDialog
+        open={pixOpen}
+        onOpenChange={setPixOpen}
+        amount={suggested > 0 ? suggested : finalPrice}
+        projectTitle={projectTitle}
+        pix={pix}
       />
     </div>
   );

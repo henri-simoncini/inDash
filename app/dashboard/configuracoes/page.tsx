@@ -3,6 +3,9 @@ import type { PreferencesValues } from "@/lib/validations/preferences";
 import { AccountSettings } from "@/components/settings/account-settings";
 import { OnboardingSettings } from "@/components/settings/onboarding-settings";
 import { PreferencesSettings } from "@/components/settings/preferences-settings";
+import { PixSettings } from "@/components/settings/pix-settings";
+import { readPixProfile } from "@/lib/pix-profile";
+import type { PixSettingsValues } from "@/lib/validations/pix";
 
 export const metadata = { title: "Configurações — inDash" };
 
@@ -18,8 +21,13 @@ export default async function ConfiguracoesPage() {
   ] = await Promise.all([
     supabase.auth.getUser(),
     supabase.from("preferences").select("*").single(),
-    supabase.from("profiles").select("full_name").single(),
+    supabase.from("profiles").select("*").single(),
   ]);
+
+  const pix = readPixProfile(profile);
+  const pixInitial: PixSettingsValues | null = pix
+    ? { keyType: pix.keyType, key: pix.key, name: pix.name, city: pix.city }
+    : null;
 
   const fontFamily = ["sans", "serif", "mono"].includes(
     preferences?.font_family ?? ""
@@ -45,6 +53,7 @@ export default async function ConfiguracoesPage() {
       </div>
 
       <PreferencesSettings initial={initial} />
+      <PixSettings initial={pixInitial} />
       <OnboardingSettings />
       <AccountSettings
         fullName={profile?.full_name ?? ""}
