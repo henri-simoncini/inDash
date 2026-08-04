@@ -4,6 +4,7 @@ import { AccountSettings } from "@/components/settings/account-settings";
 import { OnboardingSettings } from "@/components/settings/onboarding-settings";
 import { PreferencesSettings } from "@/components/settings/preferences-settings";
 import { PixSettings } from "@/components/settings/pix-settings";
+import { PasswordSettings } from "@/components/settings/password-settings";
 import { readPixProfile } from "@/lib/pix-profile";
 import type { PixSettingsValues } from "@/lib/validations/pix";
 
@@ -54,6 +55,7 @@ export default async function ConfiguracoesPage() {
 
       <PreferencesSettings initial={initial} />
       <PixSettings initial={pixInitial} />
+      <PasswordSettings email={user?.email ?? ""} />
       <OnboardingSettings />
       <AccountSettings
         fullName={profile?.full_name ?? ""}

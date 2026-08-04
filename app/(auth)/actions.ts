@@ -11,6 +11,12 @@ import {
   type SignInValues,
   type SignUpValues,
 } from "@/lib/validations/auth";
+import {
+  emailSchema,
+  setPasswordSchema,
+  type EmailValues,
+  type SetPasswordValues,
+} from "@/lib/validations/password";
 
 const NOT_CONFIGURED =
   "Este ambiente está sem as credenciais do Supabase, então o login não " +
@@ -79,6 +85,54 @@ export async function signInWithGoogle() {
   }
 
   redirect(data.url);
+}
+
+/**
+ * Envia o link de redefinição de senha. Útil também para quem entrou pelo
+ * Google e nunca teve senha — o link permite criar uma.
+ */
+export async function requestPasswordReset(values: EmailValues) {
+  if (!isSupabaseConfigured) return { error: NOT_CONFIGURED };
+
+  const parsed = emailSchema.safeParse(values);
+  if (!parsed.success) return { error: "Informe um email válido." };
+
+  const origin = (await headers()).get("origin");
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(
+    parsed.data.email,
+    { redirectTo: `${origin}/auth/callback?next=/redefinir-senha` }
+  );
+
+  if (error) {
+    console.error("[inDash] Falha ao enviar recuperação:", error.code, error.message);
+    return { error: authErrorMessage(error, "Não foi possível enviar o link.") };
+  }
+
+  // Resposta igual para email existente ou não: não revelamos quem tem conta
+  return { success: true };
+}
+
+/** Define a senha do usuário logado — não depende de email. */
+export async function setPassword(values: SetPasswordValues) {
+  if (!isSupabaseConfigured) return { error: NOT_CONFIGURED };
+
+  const parsed = setPasswordSchema.safeParse(values);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.updateUser({
+    password: parsed.data.password,
+  });
+
+  if (error) {
+    console.error("[inDash] Falha ao definir senha:", error.code, error.message);
+    return { error: authErrorMessage(error, "Não foi possível salvar a senha.") };
+  }
+
+  return { success: true };
 }
 
 export async function signOut() {

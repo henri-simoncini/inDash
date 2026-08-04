@@ -65,7 +65,15 @@ export function SignInForm({ callbackError }: { callbackError?: string }) {
             )}
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Senha</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Senha</Label>
+              <Link
+                href="/recuperar-senha"
+                className="text-xs text-muted-foreground underline-offset-4 hover:underline"
+              >
+                Esqueci minha senha
+              </Link>
+            </div>
             <Input
               id="password"
               type="password"
