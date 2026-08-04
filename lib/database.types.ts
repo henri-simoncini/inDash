@@ -178,6 +178,10 @@ export type Database = {
           full_name: string | null
           id: string
           onboarding_completed: boolean
+          pix_city: string | null
+          pix_key: string | null
+          pix_key_type: Database["public"]["Enums"]["pix_key_type"] | null
+          pix_name: string | null
           tour_seen: Json
           updated_at: string
           user_id: string
@@ -188,6 +192,10 @@ export type Database = {
           full_name?: string | null
           id?: string
           onboarding_completed?: boolean
+          pix_city?: string | null
+          pix_key?: string | null
+          pix_key_type?: Database["public"]["Enums"]["pix_key_type"] | null
+          pix_name?: string | null
           tour_seen?: Json
           updated_at?: string
           user_id: string
@@ -198,6 +206,10 @@ export type Database = {
           full_name?: string | null
           id?: string
           onboarding_completed?: boolean
+          pix_city?: string | null
+          pix_key?: string | null
+          pix_key_type?: Database["public"]["Enums"]["pix_key_type"] | null
+          pix_name?: string | null
           tour_seen?: Json
           updated_at?: string
           user_id?: string
@@ -397,6 +409,7 @@ export type Database = {
       font_size_pref: "sm" | "md" | "lg"
       multiplier_kind: "complexity" | "deadline" | "custom"
       payment_status: "pendente" | "pago"
+      pix_key_type: "cpf" | "cnpj" | "email" | "telefone" | "aleatoria"
       project_status: "agendado" | "em_andamento" | "finalizado" | "cancelado"
       theme_pref: "light" | "dark" | "system"
     }
@@ -529,6 +542,7 @@ export const Constants = {
       font_size_pref: ["sm", "md", "lg"],
       multiplier_kind: ["complexity", "deadline", "custom"],
       payment_status: ["pendente", "pago"],
+      pix_key_type: ["cpf", "cnpj", "email", "telefone", "aleatoria"],
       project_status: ["agendado", "em_andamento", "finalizado", "cancelado"],
       theme_pref: ["light", "dark", "system"],
     },

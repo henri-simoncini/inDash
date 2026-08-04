@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { requireUser } from "@/lib/supabase/require-user";
-import type { TablesUpdate } from "@/lib/database.types";
 import {
   preferencesSchema,
   profileNameSchema,
@@ -14,20 +13,6 @@ import {
   pixSettingsSchema,
   type PixSettingsValues,
 } from "@/lib/validations/pix";
-
-/**
- * As colunas de Pix são novas: os tipos gerados do Supabase só passam a
- * conhecê-las depois que a migration for aplicada e os tipos regerados.
- * Até lá este cast mantém o restante do arquivo tipado normalmente.
- */
-function pixColumns(values: {
-  pix_key: string | null;
-  pix_key_type: string | null;
-  pix_name: string | null;
-  pix_city: string | null;
-}) {
-  return values as unknown as TablesUpdate<"profiles">;
-}
 
 const INVALID = "Dados inválidos. Confira os campos.";
 const EXPIRED = "Sessão expirada. Entre novamente.";
@@ -79,14 +64,12 @@ export async function updatePixSettings(values: PixSettingsValues) {
 
   const { error } = await supabase
     .from("profiles")
-    .update(
-      pixColumns({
-        pix_key: parsed.data.key.trim(),
-        pix_key_type: parsed.data.keyType,
-        pix_name: parsed.data.name.trim(),
-        pix_city: parsed.data.city.trim(),
-      })
-    )
+    .update({
+      pix_key: parsed.data.key.trim(),
+      pix_key_type: parsed.data.keyType,
+      pix_name: parsed.data.name.trim(),
+      pix_city: parsed.data.city.trim(),
+    })
     .eq("user_id", user.id);
 
   if (error) return { error: GENERIC };
@@ -100,14 +83,12 @@ export async function removePixSettings() {
 
   const { error } = await supabase
     .from("profiles")
-    .update(
-      pixColumns({
-        pix_key: null,
-        pix_key_type: null,
-        pix_name: null,
-        pix_city: null,
-      })
-    )
+    .update({
+      pix_key: null,
+      pix_key_type: null,
+      pix_name: null,
+      pix_city: null,
+    })
     .eq("user_id", user.id);
 
   if (error) return { error: GENERIC };
