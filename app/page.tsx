@@ -4,7 +4,7 @@ import { Hero } from "@/components/landing/hero";
 import { ManagementSection } from "@/components/landing/management-section";
 import { Features } from "@/components/landing/features";
 import { SoundGate } from "@/components/landing/sound-gate";
-import { CursorField } from "@/components/landing/cursor-field";
+import ClickSpark from "@/components/landing/click-spark";
 import {
   AboutDeveloper,
   FinalCta,
@@ -34,17 +34,26 @@ export default function HomePage() {
       >
         Pular para o conteúdo
       </a>
-      <LandingHeader />
-      <main id="conteudo" className="flex-1">
-        <Hero />
-        <ManagementSection />
-        <Features />
-        <AboutDeveloper />
-        <FinalCta />
-      </main>
-      <LandingFooter />
+      {/* Envolve a página inteira: as faíscas nascem onde o clique acontece,
+          em qualquer seção. O canvas fica por cima, mas ignora ponteiro. */}
+      <ClickSpark
+        sparkColor="#54A3ED"
+        sparkSize={12}
+        sparkRadius={18}
+        sparkCount={8}
+        duration={450}
+      >
+        <LandingHeader />
+        <main id="conteudo" className="flex-1">
+          <Hero />
+          <ManagementSection />
+          <Features />
+          <AboutDeveloper />
+          <FinalCta />
+        </main>
+        <LandingFooter />
+      </ClickSpark>
       <SoundGate />
-      <CursorField />
     </div>
   );
 }
