@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TypedBlock } from "@/components/landing/typed-block";
-import { HyperspeedBackground } from "@/components/landing/hyperspeed-background";
+import { LiquidEtherBackground } from "@/components/landing/liquid-ether-background";
 
 export function Hero() {
   return (
@@ -9,7 +9,7 @@ export function Hero() {
       id="inicio"
       className="relative overflow-hidden px-4 py-24 sm:py-32"
     >
-      <HyperspeedBackground />
+      <LiquidEtherBackground />
       <div className="relative mx-auto max-w-3xl text-center">
         <TypedBlock
           as="h1"
