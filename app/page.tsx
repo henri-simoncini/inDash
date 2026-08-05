@@ -4,6 +4,7 @@ import { Hero } from "@/components/landing/hero";
 import { ManagementSection } from "@/components/landing/management-section";
 import { Features } from "@/components/landing/features";
 import { SoundGate } from "@/components/landing/sound-gate";
+import { CursorField } from "@/components/landing/cursor-field";
 import {
   AboutDeveloper,
   FinalCta,
@@ -43,6 +44,7 @@ export default function HomePage() {
       </main>
       <LandingFooter />
       <SoundGate />
+      <CursorField />
     </div>
   );
 }
