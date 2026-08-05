@@ -21,7 +21,10 @@ export function Hero() {
             Serviços, clientes, agenda, projetos e pagamentos em um painel —
             chega de planilhas e WhatsApp.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {/* A Jersey 10 só tem peso 400, e navegador não sintetiza peso mais
+              leve — baixar o font-weight aqui não mudaria nada na tela. O que
+              abre a leitura numa pixel font condensada é afastar as letras. */}
+          <div className="mt-8 flex flex-wrap justify-center gap-3 tracking-[0.06em]">
             <Link
               href="/sign-up"
               className="inline-flex items-center gap-2 rounded-md border border-[#0F5698] bg-[linear-gradient(to_bottom,#3895ED,#1660A6)] px-8 py-4 font-heading text-2xl font-normal leading-none text-white transition-all duration-200 ease-[ease] hover:opacity-90"
