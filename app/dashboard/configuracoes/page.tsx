@@ -3,6 +3,7 @@ import type { PreferencesValues } from "@/lib/validations/preferences";
 import { AccountSettings } from "@/components/settings/account-settings";
 import { OnboardingSettings } from "@/components/settings/onboarding-settings";
 import { PreferencesSettings } from "@/components/settings/preferences-settings";
+import { SoundSettings } from "@/components/settings/sound-settings";
 import { PixSettings } from "@/components/settings/pix-settings";
 import { PasswordSettings } from "@/components/settings/password-settings";
 import { readPixProfile } from "@/lib/pix-profile";
@@ -54,6 +55,7 @@ export default async function ConfiguracoesPage() {
       </div>
 
       <PreferencesSettings initial={initial} />
+      <SoundSettings />
       <PixSettings initial={pixInitial} />
       <PasswordSettings email={user?.email ?? ""} />
       <OnboardingSettings />

@@ -362,6 +362,7 @@ export type Database = {
           created_at: string
           done: boolean
           id: string
+          notes: string | null
           position: number
           project_id: string
           title: string
@@ -372,6 +373,7 @@ export type Database = {
           created_at?: string
           done?: boolean
           id?: string
+          notes?: string | null
           position?: number
           project_id: string
           title: string
@@ -382,6 +384,7 @@ export type Database = {
           created_at?: string
           done?: boolean
           id?: string
+          notes?: string | null
           position?: number
           project_id?: string
           title?: string

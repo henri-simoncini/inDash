@@ -30,7 +30,10 @@ export function isMuted() {
 
 export function subscribeMute(fn: (muted: boolean) => void) {
   listeners.add(fn);
-  return () => listeners.delete(fn);
+  // Sem devolver o boolean do delete: assim serve direto de cleanup de efeito
+  return () => {
+    listeners.delete(fn);
+  };
 }
 
 export function setMuted(value: boolean) {

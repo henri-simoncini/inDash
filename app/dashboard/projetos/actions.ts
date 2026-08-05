@@ -6,6 +6,7 @@ import type { Enums } from "@/lib/database.types";
 import {
   projectSchema,
   projectUpdateSchema,
+  taskNotesSchema,
   taskSchema,
   type ProjectUpdateValues,
   type ProjectValues,
@@ -208,6 +209,29 @@ export async function toggleTask(id: string, projectId: string, done: boolean) {
   if (!user) return { error: EXPIRED };
 
   const { error } = await supabase.from("tasks").update({ done }).eq("id", id);
+
+  if (error) return { error: GENERIC };
+  revalidateProject(projectId);
+  return { success: true };
+}
+
+export async function updateTaskNotes(
+  id: string,
+  projectId: string,
+  notes: string
+) {
+  const parsed = taskNotesSchema.safeParse({ notes });
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+  const { supabase, user } = await requireUser();
+  if (!user) return { error: EXPIRED };
+
+  const value = parsed.data.notes.trim();
+  const { error } = await supabase
+    .from("tasks")
+    // Texto vazio limpa a observação, em vez de gravar string em branco
+    .update({ notes: value === "" ? null : value })
+    .eq("id", id);
 
   if (error) return { error: GENERIC };
   revalidateProject(projectId);

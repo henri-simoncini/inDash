@@ -56,6 +56,23 @@ export function ScrollChart() {
       return;
     }
 
+    // A última barra termina junto com o fim da timeline, então esse é o
+    // instante em que o gráfico está visualmente pronto. Não dá para esperar
+    // o onSyncComplete: com sync o scrub é suavizado e o progresso se aproxima
+    // de 1 aos poucos, o que atrasava os cards bem depois do gráfico fechar.
+    let cardsShown = false;
+    const showCards = () => {
+      if (cardsShown) return;
+      cardsShown = true;
+      animate(cardEls, {
+        opacity: [0, 1],
+        y: [18, 0],
+        duration: 520,
+        delay: stagger(70),
+        ease: "out(3)",
+      });
+    };
+
     try {
       const barsAnimation = animate(barEls, {
         scaleY: [0, 1],
@@ -64,21 +81,17 @@ export function ScrollChart() {
         // cada barra ocupa uma fatia do percurso: viram Mai, Jun, Jul...
         delay: stagger(700),
         ease: "out(2)",
+        onUpdate: (self) => {
+          if (self.progress >= 0.98) showCards();
+        },
         autoplay: onScroll({
           target: root,
           // percurso do scrub: do bloco entrando até ele centralizado
           enter: "bottom-=10% top",
           leave: "center center",
           sync: 0.35,
-          onSyncComplete: () => {
-            animate(cardEls, {
-              opacity: [0, 1],
-              y: [18, 0],
-              duration: 520,
-              delay: stagger(70),
-              ease: "out(3)",
-            });
-          },
+          // rede de segurança: se o scrub fechar sem passar pelo onUpdate
+          onSyncComplete: showCards,
         }),
       });
 

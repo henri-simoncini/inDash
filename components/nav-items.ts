@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Briefcase,
   Calendar,
   FolderKanban,
@@ -19,6 +20,7 @@ export const navItems: NavItem[] = [
   { href: "/dashboard/financeiro", label: "Financeiro", icon: Wallet },
   { href: "/dashboard/clientes", label: "Clientes", icon: Users },
   { href: "/dashboard/servicos", label: "Serviços", icon: Briefcase },
+  { href: "/dashboard/estatisticas", label: "Estatísticas", icon: BarChart3 },
   { href: "/dashboard/configuracoes", label: "Configurações", icon: Settings },
 ];
 

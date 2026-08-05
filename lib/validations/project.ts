@@ -22,6 +22,11 @@ export const taskSchema = z.object({
   title: z.string().min(1, "Escreva a tarefa.").max(200, "Tarefa longa demais."),
 });
 
+// Observação da tarefa: texto livre, e vazio significa apagar a observação
+export const taskNotesSchema = z.object({
+  notes: z.string().max(2000, "Observação longa demais."),
+});
+
 export type ProjectValues = z.infer<typeof projectSchema>;
 export type ProjectUpdateValues = z.infer<typeof projectUpdateSchema>;
 export type TaskValues = z.infer<typeof taskSchema>;

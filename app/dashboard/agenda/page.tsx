@@ -1,14 +1,30 @@
 import Link from "next/link";
-import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  CalendarClock,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import {
   dayKey,
+  daysUntil,
+  deadlineLabel,
   monthLabel,
   monthParam,
   parseMonthParam,
   shiftMonth,
 } from "@/lib/agenda";
+import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { StatusBadge } from "@/components/projects/status-badge";
 import { AgendaList } from "@/components/agenda/agenda-list";
 import { MonthCalendar } from "@/components/agenda/month-calendar";
 import type {
@@ -33,14 +49,25 @@ export default async function AgendaPage({
   rangeEnd.setDate(rangeEnd.getDate() + 1);
 
   const supabase = await createClient();
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("id, title, status, scheduled_at, clients(name)")
-    .not("scheduled_at", "is", null)
-    .neq("status", "cancelado")
-    .gte("scheduled_at", rangeStart.toISOString())
-    .lt("scheduled_at", rangeEnd.toISOString())
-    .order("scheduled_at");
+  const [{ data: projects }, { data: deadlineProjects }] = await Promise.all([
+    supabase
+      .from("projects")
+      .select("id, title, status, scheduled_at, clients(name)")
+      .not("scheduled_at", "is", null)
+      .neq("status", "cancelado")
+      .gte("scheduled_at", rangeStart.toISOString())
+      .lt("scheduled_at", rangeEnd.toISOString())
+      .order("scheduled_at"),
+    // Os prazos não seguem o mês navegado: são o que está por vir agora,
+    // senão sumiriam justamente ao olhar o mês seguinte.
+    supabase
+      .from("projects")
+      .select("id, title, status, deadline, clients(name)")
+      .not("deadline", "is", null)
+      .in("status", ["agendado", "em_andamento"])
+      .order("deadline")
+      .limit(8),
+  ]);
 
   const prefix = `${year}-${String(month).padStart(2, "0")}-`;
   const byDay: AgendaByDay = new Map();
@@ -50,6 +77,7 @@ export default async function AgendaPage({
     byDay.set(key, [...(byDay.get(key) ?? []), project]);
   }
 
+  const deadlines = deadlineProjects ?? [];
   const prev = shiftMonth(year, month, -1);
   const next = shiftMonth(year, month, 1);
   const isEmpty = byDay.size === 0;
@@ -60,7 +88,7 @@ export default async function AgendaPage({
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Agenda</h1>
           <p className="mt-1 text-muted-foreground">
-            Seus projetos agendados, mês a mês.
+            Seus projetos agendados, mês a mês — e os prazos no fim da página.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -114,6 +142,65 @@ export default async function AgendaPage({
           </div>
         </>
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CalendarClock className="size-5" aria-hidden /> Prazos próximos
+          </CardTitle>
+          <CardDescription>
+            Entregas dos projetos agendados e em andamento, independente do mês
+            que você está vendo.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {deadlines.length === 0 ? (
+            <p className="rounded-lg border border-dashed px-4 py-8 text-center text-sm text-muted-foreground">
+              Nenhum projeto ativo com prazo definido. Defina o prazo ao criar
+              ou editar um projeto.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {deadlines.map((project) => {
+                const restam = daysUntil(project.deadline!);
+                const atrasado = restam < 0;
+                // Uma semana é o ponto em que o prazo deixa de ser "depois"
+                const apertado = !atrasado && restam <= 7;
+                return (
+                  <li key={project.id}>
+                    <Link
+                      href={`/dashboard/projetos/${project.id}`}
+                      className="flex items-center justify-between gap-3 rounded-lg border p-3 transition-colors hover:border-ring/60"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate font-medium">{project.title}</p>
+                        <p
+                          className={cn(
+                            "text-sm",
+                            atrasado
+                              ? "font-medium text-destructive"
+                              : apertado
+                                ? "text-amber-600 dark:text-amber-400"
+                                : "text-muted-foreground"
+                          )}
+                        >
+                          {new Date(project.deadline!).toLocaleDateString(
+                            "pt-BR"
+                          )}{" "}
+                          — {deadlineLabel(project.deadline!)}
+                          {project.clients?.name &&
+                            ` · ${project.clients.name}`}
+                        </p>
+                      </div>
+                      <StatusBadge status={project.status} className="shrink-0" />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

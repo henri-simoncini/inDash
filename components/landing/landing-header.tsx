@@ -39,7 +39,18 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/5 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/" aria-label="inDash — página inicial">
+        {/* O header só existe na landing, então o href aponta para a página
+            atual e o Next resolveria com navegação client-side — nada visível
+            aconteceria. Recarregar de fato é o que se espera ao clicar na logo. */}
+        <Link
+          href="/"
+          aria-label="inDash — recarregar a página inicial"
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.reload();
+          }}
+          className="rounded-md transition-opacity duration-200 ease-[ease] hover:opacity-80"
+        >
           <Logo />
         </Link>
 

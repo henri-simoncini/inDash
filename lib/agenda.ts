@@ -18,6 +18,32 @@ export function formatTime(date: Date) {
   });
 }
 
+/**
+ * Dias de calendário entre hoje e a data, no fuso do usuário.
+ * A conta é feita em UTC sobre as datas já normalizadas para o fuso, senão
+ * uma virada de horário de verão faria a diferença dar 0,96 ou 1,04 de dia.
+ */
+export function daysUntil(iso: string) {
+  const toUTC = (key: string) => {
+    const [y, m, d] = key.split("-").map(Number);
+    return Date.UTC(y, m - 1, d);
+  };
+  const diff = toUTC(dayKey(new Date(iso))) - toUTC(dayKey(new Date()));
+  return Math.round(diff / 86_400_000);
+}
+
+/** Texto do prazo em relação a hoje: "vence hoje", "em 3 dias", "atrasado..." */
+export function deadlineLabel(iso: string) {
+  const days = daysUntil(iso);
+  if (days < 0) {
+    const late = Math.abs(days);
+    return late === 1 ? "atrasado há 1 dia" : `atrasado há ${late} dias`;
+  }
+  if (days === 0) return "vence hoje";
+  if (days === 1) return "vence amanhã";
+  return `em ${days} dias`;
+}
+
 export function monthLabel(year: number, month: number) {
   const label = new Date(year, month - 1, 1).toLocaleDateString("pt-BR", {
     month: "long",
